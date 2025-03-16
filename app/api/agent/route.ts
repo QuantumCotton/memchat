@@ -60,7 +60,11 @@ export async function POST(request: Request) {
         content: `User: ${message}\nAssistant: ${completion.choices[0].message.content}`,
         type: 'conversation',
         agentId,
-        metadata: { toolCalls: completion.choices[0].message.tool_calls || [] }
+        metadata: {
+          toolCalls: completion.choices[0].message.tool_calls 
+            ? JSON.parse(JSON.stringify(completion.choices[0].message.tool_calls))
+            : []
+        }
       }
     });
 
